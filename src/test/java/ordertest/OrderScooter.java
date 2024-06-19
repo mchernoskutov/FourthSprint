@@ -2,6 +2,7 @@ package ordertest;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
@@ -19,6 +20,11 @@ public class OrderScooter {
 
 
     private WebDriver driver;
+
+    private MainPage objMainPage;
+    private OrderPageFirst objOrderPageFirst;
+    private OrderPageSecond objOrderPageSecond;
+
         //список проверяемых данных
         //имя
         private final String name;
@@ -76,21 +82,26 @@ public class OrderScooter {
 
             };
         }
+    @Before
+    public void open() {
+
+        driver = new ChromeDriver();
+        //создаем главную страницу
+        objMainPage = new MainPage(driver);
+        //создаем страницу заказа
+        objOrderPageFirst = new OrderPageFirst(driver);
+        //создаем вторую страницу заказа
+        objOrderPageSecond = new OrderPageSecond(driver);
+
+        //открываем страницу
+        objMainPage.openPage();
+
+    }
 
 
     @Test
     public void checkOrder() {
 
-        driver = new ChromeDriver();
-
-        //driver = new FirefoxDriver();
-
-        //создаем главную страницу
-        MainPage objMainPage = new MainPage(driver);
-        //открываем страницу
-        objMainPage.openPage();
-        //создаем страницу заказа
-        OrderPageFirst objOrderPageFirst = new OrderPageFirst(driver);
         //открываем страницу заказа
         if (upButtonOrder) { //через верхнюю кнопку заказать
             objMainPage.clickButtonOrderHeader();
@@ -124,9 +135,6 @@ public class OrderScooter {
 
         //нажимаем дальше
         objOrderPageFirst.clickButtonNext();
-
-        // создаем вторую страницу заказа
-        OrderPageSecond objOrderPageSecond = new OrderPageSecond(driver);
 
         //вводим дату
         objOrderPageSecond.setInputDate(date);
