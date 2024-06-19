@@ -7,8 +7,6 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.junit.Test;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import ya.practikum.action.Action;
 import ya.practikum.constants.Constants;
 import ya.practikum.pages.MainPage;
 import ya.practikum.pages.OrderPageFirst;
