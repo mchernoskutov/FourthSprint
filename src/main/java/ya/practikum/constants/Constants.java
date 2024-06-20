@@ -10,5 +10,8 @@ public class Constants {
 
     public final static String GRAY_COLOR = "grey";
 
+    public final static String CHROME = "chrome";
+
+    public final static String FIREFOX = "firefox";
 
 }

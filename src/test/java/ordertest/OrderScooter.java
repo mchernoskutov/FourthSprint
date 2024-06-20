@@ -8,11 +8,14 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.junit.Test;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import ya.practikum.constants.Constants;
 import ya.practikum.pages.MainPage;
 import ya.practikum.pages.OrderPageFirst;
 import ya.practikum.pages.OrderPageSecond;
 
+import static ya.practikum.constants.Constants.CHROME;
+import static ya.practikum.constants.Constants.FIREFOX;
 
 
 @RunWith(Parameterized.class)
@@ -24,7 +27,7 @@ public class OrderScooter {
     private MainPage objMainPage;
     private OrderPageFirst objOrderPageFirst;
     private OrderPageSecond objOrderPageSecond;
-
+    private String webDriverType;
         //список проверяемых данных
         //имя
         private final String name;
@@ -47,7 +50,9 @@ public class OrderScooter {
         //верхняя кнопка заказать
         private final boolean upButtonOrder;
 
-    public OrderScooter (String name
+
+    public OrderScooter (String webDriverType
+                        ,String name
                         ,String surname
                         ,String address
                         ,String metroStation
@@ -68,16 +73,17 @@ public class OrderScooter {
             this.color = color;
             this.comment = comment;
             this.upButtonOrder = upButtonOrder;
+            this.webDriverType = webDriverType;
     }
 
 
         @Parameterized.Parameters
         public static Object[] getCredential() {
             return new Object[][] {
-                    {"Михаил", "Иванов", "г. Москва", "Котельники", "79223344555",
+                    {CHROME,"Михаил", "Иванов", "г. Москва", "Котельники", "79223344555",
                     "15.06.2024", "сутки", Constants.BLACK_COLOR, "Комментарий для курьера", true },
 
-                    {"Алекс", "Мёрфи", "ул. Ленина, 92", "Арбатская", "89015566777",
+                    {CHROME,"Алекс", "Мёрфи", "ул. Ленина, 92", "Арбатская", "89015566777",
                     "19.06.2024", "трое суток", Constants.GRAY_COLOR, "Комментарий для курьера №2", false},
 
             };
@@ -85,7 +91,11 @@ public class OrderScooter {
     @Before
     public void open() {
 
-        driver = new ChromeDriver();
+        if (webDriverType.equals(CHROME)) {
+            driver = new ChromeDriver();
+        } else if (webDriverType.equals(FIREFOX)) {
+            driver = new FirefoxDriver();
+        }
         //создаем главную страницу
         objMainPage = new MainPage(driver);
         //создаем страницу заказа
